@@ -1,10 +1,10 @@
-RequireJS template for Jasmine unit tests
+CurlJS template for Jasmine unit tests
 -----------------------------------------
 
 ## Installation
 
 ```
-npm install grunt-template-jasmine-requirejs --save-dev
+npm install grunt-template-jasmine-curljs --save-dev
 ```
 
 ## Template Options

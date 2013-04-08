@@ -1,23 +1,13 @@
 
 "use strict";
 
-var template = __dirname + '/templates/jasmine-requirejs.html',
-    requirejs  = {
-      '2.1.1' : __dirname + '/../vendor/require-2.1.1.js',
-      '2.1.2' : __dirname + '/../vendor/require-2.1.2.js'
-    };
+var template = __dirname + '/templates/jasmine-curljs.html',
+    curljs  = __dirname + '/../vendor/curl-0.7.3.js';
 
 exports.process = function(grunt, task, context) {
 
-  var version = context.options.version;
-
-  // find the latest version if none given
-  if (!version) {
-    version = Object.keys(requirejs).sort().pop();
-  }
-
   var src = context.scripts.src;
-  var baseUrl = context.options.requireConfig && context.options.requireConfig.baseUrl;
+  var baseUrl = context.options.curlConfig && context.options.curlConfig.baseUrl;
   if (!baseUrl) {
     baseUrl = '/';
   }
@@ -41,9 +31,19 @@ exports.process = function(grunt, task, context) {
     });
   }
 
-  task.copyTempFile(requirejs[version],'require.js');
+  task.copyTempFile(curljs,'curl.js');
 
   var source = grunt.file.read(template);
+
+  // Replace reporter and start script urls
+  // Jasmine reporter makes these all relative but that messes
+  // with curl
+  var replaceGrunt = function(script){
+    return "js!" +script.replace("./.grunt", "grunt");
+  }
+  context.scripts.start = context.scripts.start.map(replaceGrunt);
+  context.scripts.reporters = context.scripts.reporters.map(replaceGrunt);
+
   return grunt.util._.template(source, context);
 };
 

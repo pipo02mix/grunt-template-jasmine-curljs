@@ -4,30 +4,6 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // Task configuration.
-    jshint: {
-      options: {
-        node : true,
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        boss: true,
-        eqnull: true,
-        globals: {}
-      },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib_test: {
-        src: ['src/**/*.js']
-      }
-    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -45,16 +21,16 @@ module.exports = function(grunt) {
       }
     },
     jasmine: {
-      requirejs: {
-        src: 'test/fixtures/requirejs/src/**/*.js',
+      curljs: {
+        //src: 'test/fixtures/curljs/src/**/*.js',
         options: {
-          specs: 'test/fixtures/requirejs/spec/*Spec.js',
-          helpers: 'test/fixtures/requirejs/spec/*Helper.js',
+          specs: 'test/fixtures/curljs/spec/*Spec.js',
+          helpers: 'test/fixtures/curljs/spec/*Helper.js',
           host: 'http://127.0.0.1:<%= connect.test.port %>/',
           template : require('./'),
           templateOptions: {
-            requireConfig : {
-              baseUrl: './test/fixtures/requirejs/src/'
+            curlConfig : {
+              baseUrl: ''
             }
           }
         }
@@ -62,12 +38,11 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('test', ['connect', 'jasmine:requirejs']);
+  grunt.registerTask('test', ['connect', 'jasmine:curljs']);
 
   // Default task.
   grunt.registerTask('default', ['jshint','test']);

@@ -10,26 +10,31 @@
   <% }) %>
   <% }; %>
 
-  <script src="<%= temp %>/require.js"></script>
+  <script src="<%= temp %>/curl.js"></script>
   <script>
-    <% if (options.requireConfig) { %>
-      require.config(<%= JSON.stringify(options.requireConfig) %>);
+    <% if (options.curlConfig) { %>
+      curl.config(<%= JSON.stringify(options.curlConfig) %>);
     <% } %>
+    curl.config({
+      paths: {
+        'grunt': '.grunt'
+      }
+    });
   </script>
   <% css.forEach(function(style){ %>
   <link rel="stylesheet" type="text/css" href="<%= style %>">
   <% }) %>
   <script>
-    require([
+    curl([
       <% scripts.src.forEach(function(script, i){ %>
-      <% if (options.requireConfig && options.requireConfig.baseUrl) script = script.replace(new RegExp('^' + options.requireConfig.baseUrl),""); %>
+      <% if (options.curlConfig && options.curlConfig.baseUrl) script = script.replace(new RegExp('^' + options.curlConfig.baseUrl),""); %>
       <% if (options.loaderPlugin) script = options.loaderPlugin + '!' + script %>
         '<%= script.replace(/\.js$/,"") %>' <%= i < scripts.src.length-1 ? ',' : '' %>
         <% }) %>
     ],
     function(){
-      require(['<%= [].concat(scripts.specs,scripts.reporters).join("','") %>'], function(){
-        require(['<%= scripts.start.join("','") %>'], function(){
+      curl(['<%= [].concat(scripts.specs,scripts.reporters).join("','") %>'], function(){
+        curl(['<%= scripts.start.join("','") %>'], function(){
           // good to go! Our tests should already be running.
         })
       })
