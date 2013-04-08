@@ -1,6 +1,8 @@
 CurlJS template for Jasmine unit tests
 -----------------------------------------
 
+Based on https://github.com/jsoverson/grunt-template-jasmine-requirejs
+
 ## Installation
 
 ```
@@ -9,14 +11,7 @@ npm install grunt-template-jasmine-curljs --save-dev
 
 ## Template Options
 
-### templateOptions.version
-Type: `String`
-Options: `2.1.1` `2.1.2`
-Default: latest requirejs version included
-
-The version of requirejs to use. Since this template is relatively recent, only versions 2.1.1 and 2.1.2 are
-
-### templateOptions.requireConfig
+### templateOptions.curlConfig
 Type: `Object`
 
 This object is `JSON.stringify()`-ed into the template and passed into `require.config()`
@@ -57,7 +52,7 @@ grunt.initConfig({
 
 [grunt-contrib-connect]: https://github.com/gruntjs/grunt-contrib-connect
 
-## RequireJS notes
+## CurlJS notes
 
 If you end up using this template, it's worth looking at the
 [source]() in order to familiarize yourself with how it loads your files. The load process
