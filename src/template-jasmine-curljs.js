@@ -39,7 +39,7 @@ exports.process = function(grunt, task, context) {
   // Jasmine reporter makes these all relative but that messes
   // with curl
   var replaceGrunt = function(script){
-    return "js!" +script.replace("./.grunt", "grunt");
+    return "js!" +script.replace(".grunt", "grunt");
   }
   context.scripts.start = context.scripts.start.map(replaceGrunt);
   context.scripts.reporters = context.scripts.reporters.map(replaceGrunt);
