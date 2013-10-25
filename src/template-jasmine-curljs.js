@@ -2,7 +2,7 @@
 "use strict";
 
 var template = __dirname + '/templates/jasmine-curljs.html',
-    curljs  = __dirname + '/../vendor/curl-0.7.3.js';
+    curljs  = __dirname + '/../vendor/curl-0.8.4.js';
 
 exports.process = function(grunt, task, context) {
 
