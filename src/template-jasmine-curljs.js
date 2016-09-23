@@ -2,8 +2,8 @@
 "use strict";
 
 var template = __dirname + '/templates/jasmine-curljs.html',
-    _ = require('lodash'),
-    curljs  = __dirname + '/../vendor/curl-0.8.4.js';
+    curljs  = __dirname + '/../vendor/curl-0.8.4.js',
+    _ = require('lodash');
 
 exports.process = function(grunt, task, context) {
 

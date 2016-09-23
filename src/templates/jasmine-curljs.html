@@ -10,24 +10,29 @@
   <% }) %>
   <% }; %>
 
-  <script src="<%= temp %>/curl.js"></script>
-
   <% with (scripts) { %>
-  <% [].concat(helpers).forEach(function(script){ %>
+  <% [].concat(boot, helpers, reporters).forEach(function(script){ %>
   <script src="<%= script %>"></script>
   <% }) %>
   <% }; %>
 
   <script>
+    var _config = {paths:{}};
     <% if (options.curlConfig) { %>
-      curl.config(<%= JSON.stringify(options.curlConfig) %>);
+      _config = <%= JSON.stringify(options.curlConfig) %>;
     <% } %>
-    curl.config({
-      paths: {
-        'grunt': '.grunt'
-      }
-    });
+    _config.paths['grunt'] = '.grunt';
+    curl = _config;
+
+    // Delay onLoad function until we are ready
+    var startTests = window.onload;
+    window.onload = null;
+
   </script>
+
+
+  <script src="<%= temp %>/curl.js"></script>
+
   <% css.forEach(function(style){ %>
   <link rel="stylesheet" type="text/css" href="<%= style %>">
   <% }) %>
@@ -40,15 +45,14 @@
         <% }) %>
     ],
     function(){
-      curl(['<%= [].concat(scripts.specs,scripts.reporters).join("','") %>'], function(){
-        curl(['<%= scripts.start.join("','") %>'], function(){
-          // good to go! Our tests should already be running.
-        })
+      curl(['<%= scripts.specs.join("','") %>'], function(){
+        // good to go! Our tests should already be running.
+        startTests();
       })
-    }
-    )
+    })
   </script>
 </head>
 <body>
 </body>
 </html>
+
